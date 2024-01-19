@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: cinema
+  datasource:
+    url: ${CINEMA_DB_URL:jdbc:postgresql://localhost:5432}/${CINEMA_DB_NAME:db_cinemas}
+    username: ${CINEMA_DB_USER:postgres}
+    password: ${CINEMA_DB_PASS:mysecretpassword}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:/db.changelog/changelog-master.xml
+  logging:
+     level:
+       org.springframework: DEBUG
+  
