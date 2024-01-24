@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 import com.AntonioPNPereia.cinemamanagement.domain.Cinema;
 
 @Service
-public class CinemaServiceTest {
+public class CinemaServiceChecker {
 	private CinemaService cinemaService;
 	
 	@Autowired
-	public CinemaServiceTest(final CinemaService cinemaService) {
+	public CinemaServiceChecker(final CinemaService cinemaService) {
 		this.cinemaService = cinemaService;
 	}
 	
