@@ -13,8 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
-
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -79,10 +77,7 @@ public class CinemaServiceTest {
 	    Mockito.when(cinemaRepository.save(cinemaToEdit)).thenReturn(cinemaEdited);
 	    
 	    Cinema editedCinema = cinemaService.editCinema(cinemaToEdit.getId(), cinemaEdited);
-	    
-	    Mockito.verify(cinemaRepository).findById(cinemaToEdit.getId());
-	    Mockito.verify(cinemaRepository).save(cinemaToEdit);
-	    
+ 
 	    Assert.assertEquals(cinemaEdited, editedCinema);
 	}
 

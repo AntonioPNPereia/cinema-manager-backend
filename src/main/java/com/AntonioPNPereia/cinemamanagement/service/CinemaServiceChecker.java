@@ -16,10 +16,6 @@ public class CinemaServiceChecker {
 	
 	@Autowired
 	public void cinemaTester() {
-		
-		Cinema cinema = new Cinema()
-				.name("Cinemas NOS Alameda Shop e Spot")
-				.location("Rua dos Campeões Europeus, nº 28/ 198 Porto");
-		cinemaService.createCinema(cinema);
+	
 	}
 }
