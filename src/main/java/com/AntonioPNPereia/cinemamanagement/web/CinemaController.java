@@ -3,21 +3,24 @@ package com.AntonioPNPereia.cinemamanagement.web;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.AntonioPNPereia.cinemamanagement.domain.Cinema;
 import com.AntonioPNPereia.cinemamanagement.service.CinemaService;
+import com.AntonioPNPereia.cinemamanagement.service.mapper.CinemaMapper;
+import com.AntonioPNPereia.cinemamanagement.service.model.CinemaDTO;
 
 
 @RestController
 public class CinemaController {
 	
 	private final CinemaService cinemaService;
+	private final CinemaMapper cinemaMapper;
 	
 	public static final String CINEMA_ID_PATH = "/cinema/{cinemaId}";
 	public static final String CINEMA_PATH = "/cinema";
 	
 	
-	public CinemaController(final CinemaService cinemaService) {
+	public CinemaController(final CinemaService cinemaService, final CinemaMapper cinemaMapper) {
 		this.cinemaService = cinemaService;
+		this.cinemaMapper = cinemaMapper;
 	}
 	
 	//Get Cinema by ID
@@ -27,8 +30,8 @@ public class CinemaController {
 			method = RequestMethod.GET)
 	
 	@GetMapping(CINEMA_ID_PATH)
-	ResponseEntity<Cinema> getCinema(@PathVariable final long cinemaId) {
-	    return ResponseEntity.ok(cinemaService.getCinema(cinemaId));
+	ResponseEntity<CinemaDTO> getCinema(@PathVariable final long cinemaId) {
+	    return ResponseEntity.ok(cinemaMapper.mapCinemaToCinemaDTO(cinemaService.getCinema(cinemaId)));
 	}
 	
 	// Create Cinema
@@ -38,8 +41,9 @@ public class CinemaController {
 			method = RequestMethod.POST)
 	
 	@PostMapping(CINEMA_PATH)
-	ResponseEntity<Cinema> createCinema(@RequestBody final Cinema cinema) {
-	    return ResponseEntity.ok(cinemaService.createCinema(cinema));
+	ResponseEntity<CinemaDTO> createCinema(@RequestBody final CinemaDTO cinemaDTO) {
+	    return ResponseEntity.ok(cinemaMapper.mapCinemaToCinemaDTO(
+	    		cinemaService.createCinema(cinemaMapper.mapCinemaDTOtoCinema(cinemaDTO))));
 	}
 	
 	//Edit cinema 
@@ -49,8 +53,9 @@ public class CinemaController {
 			method = RequestMethod.PUT)
 	
 	@PutMapping(CINEMA_ID_PATH)
-	ResponseEntity<Cinema> editCinema(@PathVariable final long cinemaId, @RequestBody final Cinema cinema) {
-	    return ResponseEntity.ok(cinemaService.editCinema(cinemaId, cinema));
+	ResponseEntity<CinemaDTO> editCinema(@PathVariable final long cinemaId, @RequestBody final CinemaDTO cinemaDTO) {
+	    return ResponseEntity.ok(cinemaMapper.mapCinemaToCinemaDTO(
+	    		cinemaService.editCinema(cinemaId, cinemaMapper.mapCinemaDTOtoCinema(cinemaDTO))));
 	}
 	
 	//Delete cinema 
@@ -60,8 +65,8 @@ public class CinemaController {
 			method = RequestMethod.DELETE)
 	
 	@DeleteMapping(CINEMA_ID_PATH)
-	ResponseEntity<Cinema> deleteCinema(@PathVariable final long cinemaId) {
-	    return ResponseEntity.ok(cinemaService.deleteCinema(cinemaId));
+	ResponseEntity<CinemaDTO> deleteCinema(@PathVariable final long cinemaId) {
+	    return ResponseEntity.ok(cinemaMapper.mapCinemaToCinemaDTO(cinemaService.deleteCinema(cinemaId)));
 	}
 
 }
